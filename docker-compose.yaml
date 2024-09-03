@@ -1,0 +1,34 @@
+version: "3.9"
+
+#networks:
+#  skillcoins_network:
+
+services:
+  db:
+    container_name: skillcoins_db
+    image: postgres
+    restart: always
+    mem_limit: 1GB
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER:
+      POSTGRES_PASSWORD:
+      POSTGRES_DB: skillcoins_db
+
+
+  redis:
+    container_name: task_redis
+    image: redis:latest
+    restart: always
+    ports:
+      - "6380:6379"
+    volumes:
+      - ./redis_data/dаta:/root/redis
+      - ./redis_data/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_PASSWORD=root
+      - REDIS_PORT=6379
+      - REDIS_DATABASES=16
